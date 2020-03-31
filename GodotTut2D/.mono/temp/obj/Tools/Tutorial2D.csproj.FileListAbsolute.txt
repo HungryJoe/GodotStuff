@@ -1,0 +1,6 @@
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/obj/Tools/Tutorial2D.csprojAssemblyReference.cache
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/obj/Tools/Tutorial2D.csproj.CoreCompileInputs.cache
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/bin/Tools/Tutorial2D.dll
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/bin/Tools/Tutorial2D.pdb
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/obj/Tools/Tutorial2D.dll
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/BigProject/GodotTut2D/.mono/temp/obj/Tools/Tutorial2D.pdb
