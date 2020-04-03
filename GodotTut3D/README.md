@@ -1,7 +1,9 @@
-This project is a basic 3D game made in Godot based on [this tutorial series](https://www.youtube.com/playlist?list=PLiUQR4U_J9efMalyhB1DtqywA_HPg-FrR).
-I've just finished the second episode.
+# Godot 3D Tutorial - Basic FPS
+By Sam Kagan
+This project is a basic first-person shooter made in Godot.
+It is based on [this tutorial series](https://www.youtube.com/playlist?list=PLiUQR4U_J9efMalyhB1DtqywA_HPg-FrR).
 
-Sources
+### Sources
 * https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/
 * https://docs.microsoft.com/en-us/dotnet/standard/
 * https://docs.godotengine.org/en/stable/
