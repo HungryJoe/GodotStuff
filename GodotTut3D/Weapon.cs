@@ -26,13 +26,13 @@ public class Weapon : Node
     reloadCD = GetNode<Timer>("ReloadCoolDown");
     reloadCD.WaitTime = reload_time;
     reloading = false;
-    raycast = GetNode<RayCast>("../Head/Camera/RayCast");
+    raycast = GetNode<RayCast>("../Head/Camera/WeaponRC");
     raycast.CastTo = new Vector3(0, 0, -1 * fire_range);
     ammo_label = GetNode<Label>("/root/World/UI/Ammo");
   }
 
   public override void _Process(float delta) {
-    ammo_label.SetText(String.Format("{0:D3} / {1:D3}", current_ammo, clip_size));
+    ammo_label.Text = String.Format("{0:D3} / {1:D3}", current_ammo, clip_size);
 
     if (Input.IsActionJustPressed("player_primary_fire") && CanFire()) {
       Fire();
@@ -57,7 +57,7 @@ public class Weapon : Node
     if (raycast.IsColliding()) {
       Godot.Object collider = raycast.GetCollider();
       if (collider is Node collider_node && collider_node.IsInGroup("targets")) {
-        GD.Print("Killed", collider_node.Name);
+        GD.Print(String.Format("Killed {0}", collider_node.Name));
         collider_node.QueueFree();
       }
     }

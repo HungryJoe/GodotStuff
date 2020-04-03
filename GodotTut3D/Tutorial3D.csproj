@@ -53,6 +53,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicInteractable.cs" />
+    <Compile Include="Interactable.cs" />
+    <Compile Include="InteractRC.cs" />
+    <Compile Include="LightSwitch.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weapon.cs" />

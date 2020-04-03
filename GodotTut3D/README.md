@@ -8,3 +8,4 @@ It is based on [this tutorial series](https://www.youtube.com/playlist?list=PLiU
 * https://docs.microsoft.com/en-us/dotnet/standard/
 * https://docs.godotengine.org/en/stable/
 * https://godotengine.org/article/introducing-csharp-godot
+* https://stackoverflow.com/questions/6417902/checking-if-an-object-is-null-in-c-sharp
