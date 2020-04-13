@@ -1,0 +1,6 @@
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/bin/Tools/MaterialBreedingSim.dll
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/bin/Tools/MaterialBreedingSim.pdb
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/obj/Tools/MaterialBreedingSim.csprojAssemblyReference.cache
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/obj/Tools/MaterialBreedingSim.csproj.CoreCompileInputs.cache
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/obj/Tools/MaterialBreedingSim.dll
+/home/sam/ProgrammingProjects/ChapmanStuff/236-CPSC/GodotStuff/MaterialBreedingSim/.mono/temp/obj/Tools/MaterialBreedingSim.pdb
