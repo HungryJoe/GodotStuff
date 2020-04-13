@@ -21,11 +21,9 @@ public class Camera : Godot.Camera
 
   private void SwitchMouseMode() {
     if (cap_mouse) {
-      Input.SetMouseMode(Input.MouseMode.Confined);
-      Input.SetDefaultCursorShape(Input.CursorShape.Cross);
+      Input.SetMouseMode(Input.MouseMode.Captured);
     } else {
       Input.SetMouseMode(Input.MouseMode.Visible);
-      Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
     }
   }
 }

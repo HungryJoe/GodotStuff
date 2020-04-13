@@ -29,15 +29,15 @@ public class Player : KinematicBody
       acc_XZ = 5;
       acc_grav = 0.98f;
       velocity = new Vector3(0,0,0);
-      mouse_sens = 0.3f;
-      cam_angle = 0f;
+      mouse_sens = 0.8f;
+      cam_angle = 0;
     }
     public override void _Input(InputEvent @event) {
       if (@event is InputEventMouseMotion event_mouse_motion) {
      	  head.RotateY(Deg2Rad(-1 * event_mouse_motion.Relative.x * mouse_sens));
 
       	float dx_rot = event_mouse_motion.Relative.y * mouse_sens;
-      	if (cam_angle - dx_rot > -90f && cam_angle - dx_rot < 90) {
+      	if (cam_angle - dx_rot > -90 && cam_angle - dx_rot < 90) {
       	  cam.RotateX(Deg2Rad(-1 * dx_rot));
       	  cam_angle -= dx_rot;
       	}
