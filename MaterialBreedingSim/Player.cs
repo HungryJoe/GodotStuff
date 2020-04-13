@@ -13,12 +13,16 @@ public class Player : KinematicBody
 
     private Spatial head;
     private Camera cam;
+    private RayCast raycast;
+    private PackedScene block;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
       head = GetNode<Spatial>("Head");
       cam = GetNode<Camera>("Head/Camera");
+      raycast = GetNode<RayCast>("Head/Camera/PlaceBlocksRC");
+      block = ResourceLoader.Load<PackedScene>("res://Block.tscn");
 
       spd_XZ = 10;
       spd_jump = 30;
@@ -39,10 +43,6 @@ public class Player : KinematicBody
       	  cam_angle -= dx_rot;
       	}
       }
-    }
-
-    private float Deg2Rad(float degrees) {
-      return (float)Math.PI * degrees / 180;
     }
 
     public override void _PhysicsProcess(float delta) {
@@ -70,5 +70,20 @@ public class Player : KinematicBody
       velocity.y -= acc_grav;
 
       velocity = this.MoveAndSlide(velocity, new Vector3(0,1,0));
+
+      //Place blocks!
+      if (Input.IsActionJustReleased("player_block_place")) {
+        if (raycast.IsColliding()) {
+          GD.Print("Placed block!");
+          Block bk_inst = (Block)block.Instance();
+          bk_inst.Translation = raycast.GetCollisionPoint();
+          GetNode("/root/WorldRoot").AddChild(bk_inst);
+        }
+      }
+    }
+
+
+    private float Deg2Rad(float degrees) {
+      return (float)Math.PI * degrees / 180;
     }
 }

@@ -2,13 +2,22 @@
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 
-[node name="World" type="Spatial"]
+[node name="WorldRoot" type="Spatial"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
-[node name="CSGBox" type="CSGBox" parent="."]
+[node name="ground" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2305, 0 )
 use_collision = true
+collision_mask = 3
+width = 40.0
+height = 1.0
+depth = 40.0
+
+[node name="wall" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, -2.2305, -9.70965 )
+use_collision = true
+collision_mask = 3
 width = 40.0
 height = 1.0
 depth = 40.0
