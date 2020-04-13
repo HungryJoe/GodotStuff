@@ -32,7 +32,6 @@ public class Player : KinematicBody
       mouse_sens = 0.3f;
       cam_angle = 0f;
     }
-
     public override void _Input(InputEvent @event) {
       if (@event is InputEventMouseMotion event_mouse_motion) {
      	  head.RotateY(Deg2Rad(-1 * event_mouse_motion.Relative.x * mouse_sens));
@@ -74,7 +73,6 @@ public class Player : KinematicBody
       //Place blocks!
       if (Input.IsActionJustReleased("player_block_place")) {
         if (raycast.IsColliding()) {
-          GD.Print("Placed block!");
           Block bk_inst = (Block)block.Instance();
           bk_inst.Translation = raycast.GetCollisionPoint();
           GetNode("/root/WorldRoot").AddChild(bk_inst);
