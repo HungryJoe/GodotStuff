@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://InventorySlot.tscn" type="PackedScene" id=1]
+
+[node name="GUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_top = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="HBoxContainer" parent="MarginContainer"]
+modulate = Color( 1, 1, 1, 0.862745 )
+self_modulate = Color( 1, 1, 1, 0.345098 )
+margin_right = 1024.0
+margin_bottom = 90.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="InventorySlot" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 82.0
+margin_right = 172.0
+
+[node name="InventorySlot2" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 192.0
+margin_right = 282.0
+
+[node name="InventorySlot3" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 302.0
+margin_right = 392.0
+
+[node name="InventorySlot4" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 412.0
+margin_right = 502.0
+
+[node name="InventorySlot5" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 522.0
+margin_right = 612.0
+
+[node name="InventorySlot6" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 632.0
+margin_right = 722.0
+
+[node name="InventorySlot7" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 742.0
+margin_right = 832.0
+
+[node name="InventorySlot8" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
+margin_left = 852.0
+margin_right = 942.0
