@@ -20,39 +20,39 @@ __meta__ = {
 [node name="Inventory" type="HBoxContainer" parent="MarginContainer"]
 modulate = Color( 1, 1, 1, 0.862745 )
 self_modulate = Color( 1, 1, 1, 0.345098 )
-margin_right = 1024.0
-margin_bottom = 90.0
-custom_constants/separation = 20
+margin_right = 1920.0
+margin_bottom = 150.0
+custom_constants/separation = 30
 alignment = 1
 
 [node name="InventorySlot" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 82.0
-margin_right = 172.0
+margin_left = 255.0
+margin_right = 405.0
 
 [node name="InventorySlot2" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 192.0
-margin_right = 282.0
+margin_left = 435.0
+margin_right = 585.0
 
 [node name="InventorySlot3" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 302.0
-margin_right = 392.0
+margin_left = 615.0
+margin_right = 765.0
 
 [node name="InventorySlot4" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 412.0
-margin_right = 502.0
+margin_left = 795.0
+margin_right = 945.0
 
 [node name="InventorySlot5" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 522.0
-margin_right = 612.0
+margin_left = 975.0
+margin_right = 1125.0
 
 [node name="InventorySlot6" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 632.0
-margin_right = 722.0
+margin_left = 1155.0
+margin_right = 1305.0
 
 [node name="InventorySlot7" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 742.0
-margin_right = 832.0
+margin_left = 1335.0
+margin_right = 1485.0
 
 [node name="InventorySlot8" parent="MarginContainer/Inventory" instance=ExtResource( 1 )]
-margin_left = 852.0
-margin_right = 942.0
+margin_left = 1515.0
+margin_right = 1665.0
