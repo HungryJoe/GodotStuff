@@ -2,17 +2,18 @@
 Sam Kagan
 
 ### How to Play
-Move with WASD
-Jump with space bar
-Regain mouse cursor with Escape
-Place blocks with right mouse button
+Move around and place blocks according to the material you've selected.
+
+#### Input Map
+
+![alt text](input_map.png)
+
 
 ### Sources
 * https://stackoverflow.com/questions/410227/test-if-object-implements-interface
 * https://godotengine.org/qa/1595/lock-cursor-onscreen
-* https://docs.godotengine.org/en/stable/getting_started/step_by_step/ui_game_user_interface.html
-* https://docs.godotengine.org/en/stable/getting_started/step_by_step/ui_introduction_to_the_ui_system.html
-* https://docs.godotengine.org/en/latest/tutorials/viewports/multiple_resolutions.html
 * https://www.reddit.com/r/godot/comments/7h50gv/godot_3_ui_scale_and_dpi/
-* https://docs.godotengine.org/en/stable/getting_started/step_by_step/resources.html
 * https://godotengine.org/qa/50876/load-texture-from-file-and-assign-to-texture
+* https://godotsharp.net/api/3.2.0/
+* https://docs.microsoft.com/en-us/dotnet/
+* https://docs.godotengine.org/en/stable/
