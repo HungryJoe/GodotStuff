@@ -4,8 +4,8 @@ using System;
 public class Player : KinematicBody
 {
     public int spd_XZ;
+    public float dec_XZ;
     public int spd_jump;
-    public int acc_XZ;
     public float acc_grav;
     public Vector3 velocity;
     public float mouse_sens;
@@ -15,6 +15,7 @@ public class Player : KinematicBody
     private Camera cam;
     private RayCast raycast;
     private PackedScene block;
+    private InventorySlot selected;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -23,14 +24,17 @@ public class Player : KinematicBody
       cam = GetNode<Camera>("Head/Camera");
       raycast = GetNode<RayCast>("Head/Camera/PlaceBlocksRC");
       block = ResourceLoader.Load<PackedScene>("res://Block.tscn");
+      selected = null;
 
-      spd_XZ = 10;
+      spd_XZ = 15;
+      dec_XZ = 1f;
       spd_jump = 30;
-      acc_XZ = 5;
-      acc_grav = 0.98f;
+      acc_grav = 2f;
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
+
+
     }
     public override void _Input(InputEvent @event) {
       if (@event is InputEventMouseMotion event_mouse_motion) {
@@ -60,15 +64,19 @@ public class Player : KinematicBody
 	       direction += head_basis.x;
      }
       direction = direction.Normalized();
-
-      velocity = velocity.LinearInterpolate(direction * spd_XZ, acc_XZ * delta);
-      if (Input.IsActionJustPressed("player_jump") && IsOnFloor()) {
+      
+      float oldY = velocity.y;
+      velocity = spd_XZ * direction;
+      velocity.y = oldY;
+      if (Input.IsActionPressed("player_jump") && IsOnFloor()) {
         velocity.y += spd_jump;
+      } else if (IsOnFloor()) {
+        velocity.y = 0;
+      } else {
+        velocity.y -= acc_grav;
       }
 
-      velocity.y -= acc_grav;
-
-      velocity = this.MoveAndSlide(velocity, new Vector3(0,1,0));
+      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, 0f, false);
 
       //Place blocks!
       if (Input.IsActionJustReleased("player_block_place")) {
@@ -79,6 +87,8 @@ public class Player : KinematicBody
         }
       }
     }
+
+
 
 
     private float Deg2Rad(float degrees) {
