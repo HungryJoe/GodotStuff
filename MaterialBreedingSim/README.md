@@ -17,3 +17,5 @@ Move around and place blocks according to the material you've selected.
 * https://godotsharp.net/api/3.2.0/
 * https://docs.microsoft.com/en-us/dotnet/
 * https://docs.godotengine.org/en/stable/
+* https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images
+* https://www.reddit.com/r/godot/comments/9wqhd0/signals_with_arguments/
