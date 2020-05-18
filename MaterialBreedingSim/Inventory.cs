@@ -5,8 +5,12 @@ using System;
 
 public class Inventory : HBoxContainer
 {
-    [Signal]
-    public delegate void MaterialChanged(int index);
+    [Signal]//For when a hotbar slot's material changes
+    public delegate void MaterialChanged(int index, Material mat);
+    [Signal]//For when the selected hotbar slot changes
+    public delegate void SelectChanged(int index);
+
+    private const int START_SELECTED = 0;//The index to start off selected
 
     private System.Collections.Generic.Dictionary<string, Material> mats;
     private int inv_size;
@@ -29,24 +33,22 @@ public class Inventory : HBoxContainer
       foreach (InventorySlot child in children) {
         inv.Add(child);
       }
-      selected = 0;
-      inv[selected].selected = true;
+      selected = START_SELECTED;
+      EmitSignal("SelectChanged", selected);
 
-      EmitSignal(nameof(MaterialChanged), 0, mats["stone"]);
-      EmitSignal(nameof(MaterialChanged), 1, mats["wood"]);
-      EmitSignal(nameof(MaterialChanged), 2, mats["metal"]);
-      EmitSignal(nameof(MaterialChanged), 3, mats["gel"]);
+      EmitSignal("MaterialChanged", 0, mats["stone"]);
+      EmitSignal("MaterialChanged", 1, mats["wood"]);
+      EmitSignal("MaterialChanged", 2, mats["metal"]);
+      EmitSignal("MaterialChanged", 3, mats["gel"]);
     }
 
     public override void _Input(InputEvent @event) {
       if (@event.IsActionPressed("inv_select_next")) {
-	inv[selected].selected = false;
 	selected = mod(selected + 1, inv_size);
-	inv[selected].selected = true;
+	EmitSignal("SelectChanged", selected);
       } else if (@event.IsActionPressed("inv_select_prev")) {
-	inv[selected].selected = false;
 	selected = mod(selected - 1, inv_size);
-	inv[selected].selected = true;
+	EmitSignal("SelectChanged", selected);
       }
     }
 

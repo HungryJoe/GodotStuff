@@ -7,10 +7,10 @@ public class InventorySlot : Panel
   public readonly float ALPHA_SELECTED = 1f;
   [Export]
   public readonly float ALPHA_UNSELECTED = 0.5f;
-  public Material mat;
-  public bool selected;
 
+  private bool selected;
   private TextureRect displayMaterial;
+  private Material mat;
   private int index;
 
   // Called when the node enters the scene tree for the first time.
@@ -19,28 +19,34 @@ public class InventorySlot : Panel
     mat = null;
     index = Int32.Parse(this.Name);
     displayMaterial = GetNode<TextureRect>("Inside/Material");
-    selected = false;
-    GetNode("..").Connect("MaterialChanged", this, "ChangeMaterial");
-  }
+    selected = true;
 
-  // Called every frame. 'delta' is the elapsed time since the previous frame.
-  public override void _Process(float delta)
-  {
-    if (selected) {
-      Color c = this.Modulate;
-      c.a = ALPHA_SELECTED;
-      this.Modulate = c;
-    } else {
-      Color c = this.Modulate;
-      c.a = ALPHA_UNSELECTED;
-      this.Modulate = c;
-    } 
+    GetNode("..").Connect("MaterialChanged", this, "ChangeMaterial");
+    GetNode("..").Connect("SelectChanged", this, "ChangeSelected");
   }
 
   public void ChangeMaterial(int index, Material mat) {
     if (index == this.index) {
       this.mat = mat;
       displayMaterial.Texture = mat.tex;
+    }
+  }
+
+  //If index == this.index, this is selected now and wasn't before
+  //Else, if selected == true, this was selected and now isn't
+  public void ChangeSelected(int index) {
+    if (this.index == index) {
+      //Now selected
+      selected = true;
+      Color c = this.Modulate;
+      c.a = ALPHA_SELECTED;
+      this.Modulate = c;
+    } else if (selected) {
+      //Was selected, now isn't
+      selected = false;
+      Color c = this.Modulate;
+      c.a = ALPHA_UNSELECTED;
+      this.Modulate = c;
     }
   }
 }
