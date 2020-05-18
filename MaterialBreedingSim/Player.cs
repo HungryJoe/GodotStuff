@@ -46,6 +46,15 @@ public class Player : KinematicBody
       	  cam_angle -= dx_rot;
       	}
       }
+
+      //Place blocks!
+      if (@event.IsActionPressed("player_block_place")) {
+        if (raycast.IsColliding()) {
+          Block bk_inst = (Block)block.Instance();
+          bk_inst.Translation = raycast.GetCollisionPoint();
+          GetNode("/root/WorldRoot").AddChild(bk_inst);
+        }
+      }
     }
 
     public override void _PhysicsProcess(float delta) {
@@ -77,19 +86,7 @@ public class Player : KinematicBody
       }
 
       this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, 0f, false);
-
-      //Place blocks!
-      if (Input.IsActionJustReleased("player_block_place")) {
-        if (raycast.IsColliding()) {
-          Block bk_inst = (Block)block.Instance();
-          bk_inst.Translation = raycast.GetCollisionPoint();
-          GetNode("/root/WorldRoot").AddChild(bk_inst);
-        }
-      }
     }
-
-
-
 
     private float Deg2Rad(float degrees) {
       return (float)Math.PI * degrees / 180;
