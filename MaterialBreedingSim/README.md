@@ -19,3 +19,4 @@ Move around and place blocks according to the material you've selected.
 * https://docs.godotengine.org/en/stable/
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images
 * https://www.reddit.com/r/godot/comments/9wqhd0/signals_with_arguments/
+* https://godotengine.org/qa/22529/godot-3-how-to-texture-a-3d-model

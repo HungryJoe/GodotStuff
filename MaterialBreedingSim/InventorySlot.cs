@@ -7,16 +7,16 @@ public class InventorySlot : Panel
   public readonly float ALPHA_SELECTED = 1f;
   [Export]
   public readonly float ALPHA_UNSELECTED = 0.5f;
+  public Material mat;
 
   private bool selected;
   private TextureRect displayMaterial;
-  private Material mat;
   private int index;
 
   // Called when the node enters the scene tree for the first time.
   public override void _Ready()
   {
-    mat = null;
+    mat = new Material(null);
     index = Int32.Parse(this.Name);
     displayMaterial = GetNode<TextureRect>("Inside/Material");
     selected = true;

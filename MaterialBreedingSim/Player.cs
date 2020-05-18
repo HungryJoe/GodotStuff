@@ -4,7 +4,6 @@ using System;
 public class Player : KinematicBody
 {
     public int spd_XZ;
-    public float dec_XZ;
     public int spd_jump;
     public float acc_grav;
     public Vector3 velocity;
@@ -15,7 +14,7 @@ public class Player : KinematicBody
     private Camera cam;
     private RayCast raycast;
     private PackedScene block;
-    private InventorySlot selected;
+    private Material mat;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -24,18 +23,18 @@ public class Player : KinematicBody
       cam = GetNode<Camera>("Head/Camera");
       raycast = GetNode<RayCast>("Head/Camera/PlaceBlocksRC");
       block = ResourceLoader.Load<PackedScene>("res://Block.tscn");
-      selected = null;
+      mat = null;
 
       spd_XZ = 15;
-      dec_XZ = 1f;
       spd_jump = 30;
       acc_grav = 2f;
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
 
-
+      GetNode("GUI/Inventory").Connect("SelectChanged", this, "ChangeSelected");
     }
+
     public override void _Input(InputEvent @event) {
       if (@event is InputEventMouseMotion event_mouse_motion) {
      	  head.RotateY(Deg2Rad(-1 * event_mouse_motion.Relative.x * mouse_sens));
@@ -48,9 +47,12 @@ public class Player : KinematicBody
       }
 
       //Place blocks!
-      if (@event.IsActionPressed("player_block_place")) {
+      if (@event.IsActionPressed("player_block_place") && mat.tex != null) {
         if (raycast.IsColliding()) {
           Block bk_inst = (Block)block.Instance();
+	  SpatialMaterial material = new SpatialMaterial();
+          material.AlbedoTexture = mat.tex;
+	  int surfaceCt = bk_inst.GetNode<MeshInstance>("Mesh").GetSurfaceMaterialCount();
           bk_inst.Translation = raycast.GetCollisionPoint();
           GetNode("/root/WorldRoot").AddChild(bk_inst);
         }
@@ -90,5 +92,11 @@ public class Player : KinematicBody
 
     private float Deg2Rad(float degrees) {
       return (float)Math.PI * degrees / 180;
+    }
+
+    public void ChangeSelected(int index) {
+      string selPath = String.Format("GUI/Inventory/{0}", index);
+      InventorySlot selected = GetNode<InventorySlot>(selPath);
+      mat = selected.mat;
     }
 }
