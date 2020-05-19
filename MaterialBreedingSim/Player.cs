@@ -3,6 +3,8 @@ using System;
 
 public class Player : KinematicBody
 {
+    [Signal]//So the inventory can pass the player its state even though it loads first
+    public delegate void PlayerReady();
     public int spd_XZ;
     public int spd_jump;
     public float acc_grav;
@@ -31,8 +33,10 @@ public class Player : KinematicBody
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
-
-      GetNode("GUI/Inventory").Connect("SelectChanged", this, "ChangeSelected");
+      
+      Node inv = GetNode("GUI/Inventory");
+      inv.Connect("SelectChanged", this, "ChangeSelected");
+      EmitSignal("PlayerReady");
     }
 
     public override void _Input(InputEvent @event) {
@@ -47,12 +51,9 @@ public class Player : KinematicBody
       }
 
       //Place blocks!
-      if (@event.IsActionPressed("player_block_place") && mat.tex != null) {
-        if (raycast.IsColliding()) {
-          Block bk_inst = (Block)block.Instance();
-	  SpatialMaterial material = new SpatialMaterial();
-          material.AlbedoTexture = mat.tex;
-	  int surfaceCt = bk_inst.GetNode<MeshInstance>("Mesh").GetSurfaceMaterialCount();
+      if (@event.IsActionPressed("player_block_place")) {
+        if (raycast.IsColliding() && mat != null) {
+          Block bk_inst = mat.getBlock();
           bk_inst.Translation = raycast.GetCollisionPoint();
           GetNode("/root/WorldRoot").AddChild(bk_inst);
         }
@@ -98,5 +99,6 @@ public class Player : KinematicBody
       string selPath = String.Format("GUI/Inventory/{0}", index);
       InventorySlot selected = GetNode<InventorySlot>(selPath);
       mat = selected.mat;
+      GD.Print(mat);
     }
 }

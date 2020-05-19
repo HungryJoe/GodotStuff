@@ -14,15 +14,17 @@ public class InventorySlot : Panel
   private int index;
 
   // Called when the node enters the scene tree for the first time.
-  public override void _Ready()
+  public override async void _Ready()
   {
-    mat = new Material(null);
+    mat = null;
     index = Int32.Parse(this.Name);
     displayMaterial = GetNode<TextureRect>("Inside/Material");
     selected = true;
-
-    GetNode("..").Connect("MaterialChanged", this, "ChangeMaterial");
-    GetNode("..").Connect("SelectChanged", this, "ChangeSelected");
+    
+    Node inv = GetNode("..");
+    inv.Connect("MaterialChanged", this, "ChangeMaterial");
+    inv.Connect("SelectChanged", this, "ChangeSelected");
+    await ToSignal(inv, "SelectChanged");
   }
 
   public void ChangeMaterial(int index, Material mat) {

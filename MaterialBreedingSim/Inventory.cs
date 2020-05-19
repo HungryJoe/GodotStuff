@@ -18,14 +18,14 @@ public class Inventory : HBoxContainer
     private int selected;
 
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public override async void _Ready()
     {
       //Initalize materials hashmap from scratch, for now
       mats = new System.Collections.Generic.Dictionary<string, Material>(4);
-      mats.Add("stone", new Material(GD.Load<Texture>("res://textures/stone.png")));
-      mats.Add("wood", new Material(GD.Load<Texture>("res://textures/wood.png")));
-      mats.Add("metal", new Material(GD.Load<Texture>("res://textures/metal.png")));
-      mats.Add("gel", new Material(GD.Load<Texture>("res://textures/gel.png")));
+      mats.Add("stone", new Material("Stone"));
+      mats.Add("wood", new Material("Wood"));
+      mats.Add("metal", new Material("Metal"));
+      mats.Add("gel", new Material("Gel"));
 
       inv_size = this.GetChildCount();
       inv = new List<InventorySlot>(inv_size);
@@ -33,13 +33,15 @@ public class Inventory : HBoxContainer
       foreach (InventorySlot child in children) {
         inv.Add(child);
       }
-      selected = START_SELECTED;
-      EmitSignal("SelectChanged", selected);
 
       EmitSignal("MaterialChanged", 0, mats["stone"]);
       EmitSignal("MaterialChanged", 1, mats["wood"]);
       EmitSignal("MaterialChanged", 2, mats["metal"]);
       EmitSignal("MaterialChanged", 3, mats["gel"]);
+
+      selected = START_SELECTED;
+
+      GetNode("../..").Connect("PlayerReady", this, "PlayerReady");
     }
 
     public override void _Input(InputEvent @event) {
@@ -58,5 +60,9 @@ public class Inventory : HBoxContainer
 	residue += modulus;
       }
       return residue;
+    }
+
+    private void PlayerReady() {
+      EmitSignal("SelectChanged", selected);
     }
 }
