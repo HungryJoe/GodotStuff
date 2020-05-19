@@ -25,3 +25,4 @@ Move around and place blocks according to the material you've selected.
 * https://www.reddit.com/r/godot/comments/fr0q86/scene_inheritance/
 * https://godotengine.org/article/introducing-csharp-godot
 * Movement and camera controller based on [this tutorial series](https://www.youtube.com/playlist?list=PLiUQR4U_J9efMalyhB1DtqywA_HPg-FrR)
+* I downloaded [this demo](https://docs.godotengine.org/en/stable/_downloads/e4105f0d6448811bfc256845ba6dbaa3/gridmap_demo.zip) to better understand GridMap

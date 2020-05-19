@@ -99,6 +99,5 @@ public class Player : KinematicBody
       string selPath = String.Format("GUI/Inventory/{0}", index);
       InventorySlot selected = GetNode<InventorySlot>(selPath);
       mat = selected.mat;
-      GD.Print(mat);
     }
 }
