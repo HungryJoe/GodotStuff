@@ -11,7 +11,8 @@ public class Player : KinematicBody
     public Vector3 velocity;
     public float mouse_sens;
     public float cam_angle;
-
+    
+    private bool is_airborn;
     private Spatial head;
     private Camera cam;
     private RayCast raycast;
@@ -33,6 +34,7 @@ public class Player : KinematicBody
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
+      is_airborn = false;
       
       Node inv = GetNode("GUI/Inventory");
       inv.Connect("SelectChanged", this, "ChangeSelected");
@@ -80,15 +82,18 @@ public class Player : KinematicBody
       float oldY = velocity.y;
       velocity = spd_XZ * direction;
       velocity.y = oldY;
-      if (Input.IsActionPressed("player_jump") && IsOnFloor()) {
+      if (Input.IsActionPressed("player_jump") && !is_airborn) {
         velocity.y += spd_jump;
+	is_airborn = true;
       } else if (IsOnFloor()) {
         velocity.y = 0;
-      } else {
+	is_airborn = false;
+      }
+      if (is_airborn) {
         velocity.y -= acc_grav;
       }
 
-      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, 0f, false);
+      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
     }
 
     private float Deg2Rad(float degrees) {
