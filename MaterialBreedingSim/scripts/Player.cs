@@ -15,7 +15,6 @@ public class Player : KinematicBody
     private Spatial head;
     private Camera cam;
     private RayCast raycast;
-    private PackedScene block;
     private Material mat;
 
     // Called when the node enters the scene tree for the first time.
@@ -24,7 +23,6 @@ public class Player : KinematicBody
       head = GetNode<Spatial>("Head");
       cam = GetNode<Camera>("Head/Camera");
       raycast = GetNode<RayCast>("Head/Camera/PlaceBlocksRC");
-      block = ResourceLoader.Load<PackedScene>("res://Block.tscn");
       mat = null;
 
       spd_XZ = 15;

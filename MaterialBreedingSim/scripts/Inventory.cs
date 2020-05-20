@@ -18,7 +18,7 @@ public class Inventory : HBoxContainer
     private int selected;
 
     // Called when the node enters the scene tree for the first time.
-    public override async void _Ready()
+    public override void _Ready()
     {
       //Initalize materials hashmap from scratch, for now
       mats = new System.Collections.Generic.Dictionary<string, Material>(4);
