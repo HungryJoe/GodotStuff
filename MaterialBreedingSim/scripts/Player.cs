@@ -63,35 +63,38 @@ public class Player : KinematicBody
     }
 
     public override void _PhysicsProcess(float delta) {
-      Basis head_basis = head.Transform.basis;
-      Vector3 direction = new Vector3(0,0,0);
-      if (Input.IsActionPressed("player_forward")) {
-        direction -= head_basis.z;
-      }
-      if (Input.IsActionPressed("player_backward")) {
-        direction += head_basis.z;
-      }
-      if (Input.IsActionPressed("player_left")) {
-	       direction -= head_basis.x;
-      }
-      if (Input.IsActionPressed("player_right")) {
-	       direction += head_basis.x;
-     }
-      direction = direction.Normalized();
+      if (!is_airborn) {
+        Basis head_basis = head.Transform.basis;
+        Vector3 direction = new Vector3(0,0,0);
+        if (Input.IsActionPressed("player_forward")) {
+          direction -= head_basis.z;
+        }
+        if (Input.IsActionPressed("player_backward")) {
+          direction += head_basis.z;
+        }
+        if (Input.IsActionPressed("player_left")) {
+       	  direction -= head_basis.x;
+        }
+        if (Input.IsActionPressed("player_right")) {
+          direction += head_basis.x;
+        }
+        direction = direction.Normalized();
       
-      float oldY = velocity.y;
-      velocity = spd_XZ * direction;
-      velocity.y = oldY;
-      if (Input.IsActionPressed("player_jump") && !is_airborn) {
-        velocity.y += spd_jump;
-	is_airborn = true;
-      } else if (IsOnFloor()) {
-        velocity.y = 0;
-	is_airborn = false;
-      }
-      if (is_airborn) {
+        float oldY = velocity.y;
+        velocity = spd_XZ * direction;
+        velocity.y = oldY;
+        if (Input.IsActionPressed("player_jump")) {
+          velocity.y += spd_jump;
+	  is_airborn = true;
+        }
+      } else {
         velocity.y -= acc_grav;
+        if (IsOnFloor()) {
+          velocity.y = 0;
+          is_airborn = false;
+        }
       }
+
 
       this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
     }
