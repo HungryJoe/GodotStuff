@@ -16,6 +16,7 @@ public class Player : KinematicBody
     private Camera cam;
     private RayCast raycast;
     private Material mat;
+    private GridMap world_grid;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -24,6 +25,7 @@ public class Player : KinematicBody
       cam = GetNode<Camera>("Head/Camera");
       raycast = GetNode<RayCast>("Head/Camera/PlaceBlocksRC");
       mat = null;
+      world_grid = GetNode<GridMap>("/root/WorldRoot/GridMap");
 
       spd_XZ = 15;
       spd_jump = 30;
