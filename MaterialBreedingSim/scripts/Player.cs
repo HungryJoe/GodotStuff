@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Player : KinematicBody
 {
@@ -55,11 +56,20 @@ public class Player : KinematicBody
       //Place blocks!
       if (@event.IsActionPressed("player_block_place")) {
         if (raycast.IsColliding() && mat != null) {
-          Block bk_inst = mat.getBlock();
-          bk_inst.Translation = raycast.GetCollisionPoint();
-          GetNode("/root/WorldRoot").AddChild(bk_inst);
+          int[] g_pos = Vector3ToInts(world_grid.WorldToMap(raycast.GetCollisionPoint()));
+	  if (world_grid.GetCellItem(g_pos[0], g_pos[1], g_pos[2]) == -1) {
+            world_grid.SetCellItem(g_pos[0], g_pos[1], g_pos[2], mat.ml_idx);
+          }
         }
       }
+    }
+
+    private int[] Vector3ToInts(Vector3 v) {
+      int[] a = new int[3];
+      a[0] = (int)v.x;
+      a[1] = (int)v.y;
+      a[2] = (int)v.z;
+      return a;
     }
 
     public override void _PhysicsProcess(float delta) {
@@ -86,7 +96,7 @@ public class Player : KinematicBody
         if (Input.IsActionPressed("player_jump")) {
           velocity.y += spd_jump;
 	  is_airborn = true;
-        }
+	}
       } else {
         velocity.y -= acc_grav;
         if (IsOnFloor()) {

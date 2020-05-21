@@ -1,17 +1,14 @@
 using Godot;
 using System;
 
-public class Material : Godot.Object
+public class Material : Node
 {
   public Texture tex;
-  private PackedScene block;
+  public int ml_idx;//This material's index in the world grid's MeshLibrary
 
   public Material(string name) {
     this.tex = GD.Load<Texture>(String.Format("res://textures/{0}.png", name));
-    this.block = GD.Load<PackedScene>(String.Format("res://scenes/blocks/Block-{0}.tscn", name));
-  }
-
-  public Block getBlock() {
-    return (Block)block.Instance();
+    MeshLibrary ml = GD.Load<MeshLibrary>("res://Blocks_ML.meshlib");
+    this.ml_idx = ml.FindItemByName(name);
   }
 }
