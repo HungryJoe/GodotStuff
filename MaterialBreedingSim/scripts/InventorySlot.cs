@@ -1,3 +1,7 @@
+//Inventory slot controls each slot in the hotbar.
+//Specifically, stores the material each slot holds (if any) and whether
+//or not they're selected.
+
 using Godot;
 using System;
 
@@ -20,12 +24,13 @@ public class InventorySlot : Panel
     index = Int32.Parse(this.Name);
     displayMaterial = GetNode<TextureRect>("Inside/Material");
     selected = true;
-    
+
     Node inv = GetNode("..");
     inv.Connect("MaterialChanged", this, "ChangeMaterial");
     inv.Connect("SelectChanged", this, "ChangeSelected");
   }
 
+  //Called when Inventory emits its MaterialChanged signal
   public void ChangeMaterial(int index, Material mat) {
     if (index == this.index) {
       this.mat = mat;
@@ -33,15 +38,16 @@ public class InventorySlot : Panel
     }
   }
 
-  //If index == this.index, this is selected now and wasn't before
-  //Else, if selected == true, this was selected and now isn't
+  //Called when Inventory emits its SelectChanged signal
   public void ChangeSelected(int index) {
+    //If index == this.index, this is selected now and wasn't before
     if (this.index == index) {
       //Now selected
       selected = true;
       Color c = this.Modulate;
       c.a = ALPHA_SELECTED;
       this.Modulate = c;
+    //Else, if selected == true, this was selected and now isn't
     } else if (selected) {
       //Was selected, now isn't
       selected = false;

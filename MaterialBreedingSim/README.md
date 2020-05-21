@@ -4,6 +4,16 @@ Sam Kagan
 ### How to Play
 Move around and place blocks according to the material you've selected.
 
+#### The Materials
+There are four materials that were going to be bred together:
+* Wood: it's brown
+* Gel: it's green
+* Metal: it's brown with lots of splotches
+* Stone: it's gray with lines
+
+While they're no different except for their textures right now, they are treated
+as if they are totally different.
+
 #### Input Map
 
 ![alt text](input_map.png)

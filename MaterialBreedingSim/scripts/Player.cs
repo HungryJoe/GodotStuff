@@ -1,3 +1,5 @@
+//Player controls the player's movement and block placing
+
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -12,12 +14,13 @@ public class Player : KinematicBody
     public Vector3 velocity;
     public float mouse_sens;
     public float cam_angle;
-    
+
     private Spatial head;
     private Camera cam;
     private RayCast raycast;
     private Material mat;
     private GridMap world_grid;
+    private bool cap_mouse;
 
     private const float TOLERANCE = 0.1f;
 
@@ -36,34 +39,41 @@ public class Player : KinematicBody
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
-      
-      Node inv = GetNode("GUI/Inventory");
-      inv.Connect("SelectChanged", this, "ChangeSelected");
+      cap_mouse = true;
+
+      SwitchMouseMode();//Capture the mouse from the first
+
+      GetNode("GUI/Inventory").Connect("SelectChanged", this, "ChangeSelected");
       EmitSignal("PlayerReady");
     }
 
+    //Called whenever the player inputs something
     public override void _Input(InputEvent @event) {
       if (@event is InputEventMouseMotion event_mouse_motion) {
+        //Move camera according to mouse motion
      	  head.RotateY(Deg2Rad(-1 * event_mouse_motion.Relative.x * mouse_sens));
-
       	float dx_rot = event_mouse_motion.Relative.y * mouse_sens;
       	if (cam_angle - dx_rot > -90 && cam_angle - dx_rot < 90) {
       	  cam.RotateX(Deg2Rad(-1 * dx_rot));
       	  cam_angle -= dx_rot;
       	}
       }
-    }
 
-    public override void _UnhandledInput(InputEvent @event) {
-      //Place blocks!
       if (@event.IsActionPressed("player_block_place") && raycast.IsColliding() && mat != null) {
+        //Place blocks!
         int[] g_pos = Vector3ToInts(world_grid.WorldToMap(raycast.GetCollisionPoint() + TOLERANCE * Heading()));
         if (world_grid.GetCellItem(g_pos[0], g_pos[1], g_pos[2]) == -1) {
           world_grid.SetCellItem(g_pos[0], g_pos[1], g_pos[2], mat.ml_idx);
         }
       }
+
+      if (@event.IsActionReleased("player_pause")) {
+        cap_mouse = !cap_mouse;
+        SwitchMouseMode();
+      }
     }
 
+    //Converts a Vector3 to an array of ints
     private int[] Vector3ToInts(Vector3 v) {
       int[] a = new int[3];
       a[0] = (int)v.x;
@@ -72,6 +82,7 @@ public class Player : KinematicBody
       return a;
     }
 
+    //Gets the direction the player is currently facing as a unit vector
     private Vector3 Heading() {
       Basis hb = head.Transform.basis;
       Vector3 v = new Vector3(0,0,0);
@@ -79,7 +90,19 @@ public class Player : KinematicBody
       return v.Normalized();
     }
 
+    //Switch between capturing the cursor in the game window, rendering it invisible,
+    //and normal cursor behavior
+    private void SwitchMouseMode() {
+      if (cap_mouse) {
+        Input.SetMouseMode(Input.MouseMode.Captured);
+      } else {
+        Input.SetMouseMode(Input.MouseMode.Visible);
+      }
+    }
+
+    //Called whenever the game wants to update its physics simulation
     public override void _PhysicsProcess(float delta) {
+      //Gets the direction, in terms of X and Z, that the player would like to move in
       Basis head_basis = head.Transform.basis;
       Vector3 direction = new Vector3(0,0,0);
       if (Input.IsActionPressed("player_forward")) {
@@ -95,7 +118,8 @@ public class Player : KinematicBody
         direction += head_basis.x;
       }
       direction = direction.Normalized();
-    
+
+      //Calculates current velocity
       Vector3 maxVel = spd_XZ * direction;
       maxVel.y = velocity.y;
       if (IsOnFloor()) {
@@ -106,15 +130,17 @@ public class Player : KinematicBody
       } else {
         maxVel.y -= acc_grav;
       }
-      velocity = velocity.LinearInterpolate(maxVel, 0.75f);
+      velocity = velocity.LinearInterpolate(maxVel, 0.75f);//Allows some sliding, but not too much
 
       velocity = this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
     }
 
+    //Converts degrees to radians
     private float Deg2Rad(float degrees) {
       return (float)Math.PI * degrees / 180;
     }
 
+    //Called when Inventory emits its SelectChanged signal
     public void ChangeSelected(int index) {
       string selPath = String.Format("GUI/Inventory/{0}", index);
       InventorySlot selected = GetNode<InventorySlot>(selPath);
