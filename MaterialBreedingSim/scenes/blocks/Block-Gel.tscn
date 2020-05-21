@@ -11,4 +11,3 @@ albedo_texture = ExtResource( 2 )
 [node name="Block" instance=ExtResource( 1 )]
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
-tex = ExtResource( 2 )

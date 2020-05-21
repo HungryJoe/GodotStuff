@@ -37,7 +37,7 @@ public class Player : KinematicBody
       spd_jump = 30;
       acc_grav = 1.8f;
       velocity = new Vector3(0,0,0);
-      mouse_sens = 0.8f;
+      mouse_sens = 0.5f;
       cam_angle = 0;
       cap_mouse = true;
 
