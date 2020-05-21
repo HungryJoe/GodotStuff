@@ -32,12 +32,10 @@ public class Player : KinematicBody
 
       spd_XZ = 15;
       spd_jump = 30;
-      acc_grav = 2f;
+      acc_grav = 1.8f;
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
-
-      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 0, Deg2Rad(45f), false);//To set the floor vector for IsOnFloor()
       
       Node inv = GetNode("GUI/Inventory");
       inv.Connect("SelectChanged", this, "ChangeSelected");
@@ -54,7 +52,9 @@ public class Player : KinematicBody
       	  cam_angle -= dx_rot;
       	}
       }
+    }
 
+    public override void _UnhandledInput(InputEvent @event) {
       //Place blocks!
       if (@event.IsActionPressed("player_block_place") && raycast.IsColliding() && mat != null) {
         int[] g_pos = Vector3ToInts(world_grid.WorldToMap(raycast.GetCollisionPoint() + TOLERANCE * Heading()));
@@ -96,20 +96,19 @@ public class Player : KinematicBody
         }
         direction = direction.Normalized();
       
-        float oldY = velocity.y;
-        velocity = spd_XZ * direction;
-        velocity.y = oldY;
+        Vector3 maxVel = spd_XZ * direction;
+        maxVel.y = velocity.y;
         if (IsOnFloor()) {
-          velocity.y = 0;
-          if (Input.IsActionJustPressed("player_jump")) {
-            velocity.y += spd_jump;
-          }
+          if (Input.IsActionPressed("player_jump"))
+            maxVel.y += spd_jump;
+          else
+            maxVel.y = 0;
         } else {
-          velocity.y -= acc_grav;
+          maxVel.y -= acc_grav;
 	}
+	velocity = velocity.LinearInterpolate(maxVel, 0.5f);
 
-
-      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
+      velocity = this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
     }
 
     private float Deg2Rad(float degrees) {
