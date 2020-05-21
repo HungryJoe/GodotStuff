@@ -7,6 +7,7 @@
 [sub_resource type="SpatialMaterial" id=2]
 
 [sub_resource type="BoxShape" id=3]
+extents = Vector3( 1.00716, 0.996605, 0.98881 )
 
 [node name="Block" type="MeshInstance"]
 mesh = SubResource( 1 )

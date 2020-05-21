@@ -25,7 +25,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Head" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.68005, 0.0726342 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82536, 0.0726342 )
 
 [node name="Camera" type="Camera" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.500615, -1.03332 )

@@ -13,12 +13,13 @@ public class Player : KinematicBody
     public float mouse_sens;
     public float cam_angle;
     
-    private bool is_airborn;
     private Spatial head;
     private Camera cam;
     private RayCast raycast;
     private Material mat;
     private GridMap world_grid;
+
+    private const float TOLERANCE = 0.1f;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -35,7 +36,8 @@ public class Player : KinematicBody
       velocity = new Vector3(0,0,0);
       mouse_sens = 0.8f;
       cam_angle = 0;
-      is_airborn = false;
+
+      this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 0, Deg2Rad(45f), false);//To set the floor vector for IsOnFloor()
       
       Node inv = GetNode("GUI/Inventory");
       inv.Connect("SelectChanged", this, "ChangeSelected");
@@ -54,12 +56,10 @@ public class Player : KinematicBody
       }
 
       //Place blocks!
-      if (@event.IsActionPressed("player_block_place")) {
-        if (raycast.IsColliding() && mat != null) {
-          int[] g_pos = Vector3ToInts(world_grid.WorldToMap(raycast.GetCollisionPoint()));
-	  if (world_grid.GetCellItem(g_pos[0], g_pos[1], g_pos[2]) == -1) {
-            world_grid.SetCellItem(g_pos[0], g_pos[1], g_pos[2], mat.ml_idx);
-          }
+      if (@event.IsActionPressed("player_block_place") && raycast.IsColliding() && mat != null) {
+        int[] g_pos = Vector3ToInts(world_grid.WorldToMap(raycast.GetCollisionPoint() + TOLERANCE * Heading()));
+        if (world_grid.GetCellItem(g_pos[0], g_pos[1], g_pos[2]) == -1) {
+          world_grid.SetCellItem(g_pos[0], g_pos[1], g_pos[2], mat.ml_idx);
         }
       }
     }
@@ -72,8 +72,14 @@ public class Player : KinematicBody
       return a;
     }
 
+    private Vector3 Heading() {
+      Basis hb = head.Transform.basis;
+      Vector3 v = new Vector3(0,0,0);
+      v = hb.x + hb.y + hb.z;
+      return v.Normalized();
+    }
+
     public override void _PhysicsProcess(float delta) {
-      if (!is_airborn) {
         Basis head_basis = head.Transform.basis;
         Vector3 direction = new Vector3(0,0,0);
         if (Input.IsActionPressed("player_forward")) {
@@ -93,17 +99,14 @@ public class Player : KinematicBody
         float oldY = velocity.y;
         velocity = spd_XZ * direction;
         velocity.y = oldY;
-        if (Input.IsActionPressed("player_jump")) {
-          velocity.y += spd_jump;
-	  is_airborn = true;
-	}
-      } else {
-        velocity.y -= acc_grav;
         if (IsOnFloor()) {
           velocity.y = 0;
-          is_airborn = false;
-        }
-      }
+          if (Input.IsActionJustPressed("player_jump")) {
+            velocity.y += spd_jump;
+          }
+        } else {
+          velocity.y -= acc_grav;
+	}
 
 
       this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
