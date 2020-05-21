@@ -27,3 +27,4 @@ Move around and place blocks according to the material you've selected.
 * Movement and camera controller based on [this tutorial series](https://www.youtube.com/playlist?list=PLiUQR4U_J9efMalyhB1DtqywA_HPg-FrR)
 * I downloaded [this demo](https://docs.godotengine.org/en/stable/_downloads/e4105f0d6448811bfc256845ba6dbaa3/gridmap_demo.zip) to better understand GridMap
 * I looked at [this page](https://github.com/godotengine/godot/blob/9b3d43cb974dd3407fd0936e486e34b8cec436e7/scene/3d/physics_body_3d.cpp) of the source code
+* Font obtained [from here](https://ftp.gnu.org/gnu/freefont/freefont-ttf.zip)

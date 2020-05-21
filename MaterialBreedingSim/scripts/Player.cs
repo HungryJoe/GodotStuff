@@ -80,33 +80,33 @@ public class Player : KinematicBody
     }
 
     public override void _PhysicsProcess(float delta) {
-        Basis head_basis = head.Transform.basis;
-        Vector3 direction = new Vector3(0,0,0);
-        if (Input.IsActionPressed("player_forward")) {
-          direction -= head_basis.z;
-        }
-        if (Input.IsActionPressed("player_backward")) {
-          direction += head_basis.z;
-        }
-        if (Input.IsActionPressed("player_left")) {
-       	  direction -= head_basis.x;
-        }
-        if (Input.IsActionPressed("player_right")) {
-          direction += head_basis.x;
-        }
-        direction = direction.Normalized();
-      
-        Vector3 maxVel = spd_XZ * direction;
-        maxVel.y = velocity.y;
-        if (IsOnFloor()) {
-          if (Input.IsActionPressed("player_jump"))
-            maxVel.y += spd_jump;
-          else
-            maxVel.y = 0;
-        } else {
-          maxVel.y -= acc_grav;
-	}
-	velocity = velocity.LinearInterpolate(maxVel, 0.5f);
+      Basis head_basis = head.Transform.basis;
+      Vector3 direction = new Vector3(0,0,0);
+      if (Input.IsActionPressed("player_forward")) {
+        direction -= head_basis.z;
+      }
+      if (Input.IsActionPressed("player_backward")) {
+        direction += head_basis.z;
+      }
+      if (Input.IsActionPressed("player_left")) {
+        direction -= head_basis.x;
+      }
+      if (Input.IsActionPressed("player_right")) {
+        direction += head_basis.x;
+      }
+      direction = direction.Normalized();
+    
+      Vector3 maxVel = spd_XZ * direction;
+      maxVel.y = velocity.y;
+      if (IsOnFloor()) {
+        if (Input.IsActionPressed("player_jump"))
+          maxVel.y += spd_jump;
+        else
+          maxVel.y = 0;
+      } else {
+        maxVel.y -= acc_grav;
+      }
+      velocity = velocity.LinearInterpolate(maxVel, 0.75f);
 
       velocity = this.MoveAndSlide(velocity, new Vector3(0,1,0), false, 1, Deg2Rad(45f), false);
     }
